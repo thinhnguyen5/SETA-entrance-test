@@ -23,7 +23,7 @@ const FetchApi = () => {
 
   // Fetch the data the the API
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/posts")
+    fetch(url)
       .then((response) => response.json())
       .then((data) => setUser(data))
       .catch((err) => console.log(err));
