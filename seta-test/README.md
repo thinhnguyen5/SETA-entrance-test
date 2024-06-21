@@ -1,3 +1,13 @@
+I. Javascript algorithm
+    1. Provide an array of strings, eg: [‘a’, ‘ab’, ‘abc’, ‘cd’, ‘def, ‘gh’]. Write a function to find the strings’ length that appear most in this array. Writing the unit test function and provide some test-cases. The result for example array is [‘ab’, ‘cd’, ‘gh’]
+        + Find the solution in the Ex1.js file in the Javascript algorithm folder.
+        + Sort the array from smallest to largest based on element length.
+        + Count is initialized to 1 to keep track of the occurrence of the current longest string length. Len is initialized to the length of the first element in the sorted array, representing the current longest string length seen so far. Best_count is initialized to 1 to store the maximum occurrence of any string length encountered. Best_len is initialized to len to store the length corresponding to best_count.
+        + Then I use two loops, the first one to find the strings' length that appears most in this array and the best count the this string' length.
+        + Use the loop one more time, for each element, if its length is equal to the best_len, it pushes that element into the result array.
+    2. Provide an array of integers, eg: [1, 4, 2, 3, 5]. Write a function to find sum of integers on top 2. Writing the unit test function and provide some test-cases The result for the example array is 9
+        + Find the solution in the Ex2.js file in the Javascript algorithm folder.
+        + Create the function sumOfTop2BiggestNumber to return the sum of the two largest numbers, create num1 and num2 assigned to the first 2 values ​​of the array respectively, then run a loop to find those 2 numbers
 II. React
     Provide the API for posts: https://jsonplaceholder.typicode.com/posts
     Writing a react-redux app that:
