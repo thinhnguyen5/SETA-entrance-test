@@ -1,50 +1,67 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
 const FetchApi = () => {
   const [user, setUser] = useState([]);
+  const [error, setError] = useState(null);
   const url = "https://jsonplaceholder.typicode.com/posts";
 
-  // Create a new post
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    Axios.post(url, {
-      userId: e.target[0].value,
-      title: e.target[1].value,
-      body: e.target[2].value,
-    }).then((res) => {
-      setUser((previous) => {
-        return [...previous, res.data];
-      });
-      console.log(res.data);
-    });
-  };
-
-  // Fetch the data the the API
+  //Fetch Data
   useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => setUser(data))
-      .catch((err) => console.log(err));
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setUser(data);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError(err.message || "An error occurred while fetching data.");
+      }
+    };
+
+    fetchData();
   }, []);
+
+  //Post Data
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setError(null); // Clear any previous errors
+
+    try {
+      const response = await Axios.post(url, {
+        userId: e.target[0].value,
+        title: e.target[1].value,
+        body: e.target[2].value,
+      });
+      setUser((prev) => [...prev, response.data]);
+      console.log("Post created successfully:", response.data);
+    } catch (err) {
+      console.error("Error creating post:", err);
+      setError(err.message || "An error occurred while creating the post.");
+    }
+  };
 
   return (
     <div>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input id="userId" placeholder="userId" type="number"></input>
-        <input id="title" placeholder="title" type="text"></input>
-        <input id="body" placeholder="body" type="text"></input>
+      {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+      <form onSubmit={handleSubmit}>
+        <input id="userId" placeholder="userId" type="number" required />
+        <input id="title" placeholder="title" type="text" required />
+        <input id="body" placeholder="body" type="text" required />
         <button>Post</button>
       </form>
 
       <ul>
         {user.map((list, index) => (
           <li key={index}>
-            userId:{list.userId} <br />
-            Id:{list.id} <br />
-            Title:{list.title} <br />
-            Body:{list.body}
+            <p>
+              userId: {list.userId} <br />
+              Id: {list.id} <br />
+              Title: {list.title} <br />
+              Body: {list.body}
+            </p>
           </li>
         ))}
       </ul>
